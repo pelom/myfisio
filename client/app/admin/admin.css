@@ -1,0 +1,26 @@
+.animate-show-hide.ng-hide {
+  opacity: 0;
+}
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+body > .ui-select-bootstrap.open {
+    z-index: 1100; /* greater then ui bootstrap modal, that 1050 */
+}
+.spinner {
+  position: fixed !important;
+}
+.spinner:before {
+  background-color: rgba(49, 37, 37, 0.1);
+  border-radius: 6px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  content: " ";
+}

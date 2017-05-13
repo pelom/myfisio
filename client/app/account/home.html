@@ -1,0 +1,73 @@
+<div class="container">
+  <!--h3><i class="fa fa-home" aria-hidden="true"></i> <b>Início</b></h3-->
+  <!--hr/-->
+  <div class="row">
+    <button type="button" class="btn btn-default btn-lg"
+      ng-click="ctl.addEvento()">Adicionar</button>
+    <!--ul class="breadcrumb">
+      <li title="Itens no calendário" uib-popover="I appeared on mouse enter!" popover-trigger="'mouseenter'">
+        <a href="#" ng-click="ctl.findEventListStatus('');">
+          <i class="fa fa-calendar" aria-hidden="true"></i> <b> {{ctl.EventoService.getEventoList().length}}</b></a>
+      </li>
+      <li class="completed" title="Concluído">
+        <a href="" ng-click="ctl.findEventListStatus('Concluído');">
+          <i class="fa fa-check" aria-hidden="true"></i> <b>{{ctl.EventoService.getNumConcluido()}}</b></a></li>
+      <li class="pending" title="Pendente">
+        <a href="" ng-click="ctl.findEventListStatus('Pendente');">
+          <i class="fa fa-clock-o" aria-hidden="true"></i> <b>{{ctl.EventoService.getNumPendente()}}</b></a></li>
+      <li class="inprocess" title="Em Andamento">
+        <a href="" ng-click="ctl.findEventListStatus('Em Andamento');">
+          <i class="fa fa-spinner" aria-hidden="true"></i> <b>{{ctl.EventoService.getNumEmAndamento()}}</b></a></li>
+      <li class="cancel" title="Cancelado">
+        <a href="" ng-click="ctl.findEventListStatus('Cancelado');">
+        <i class="fa fa-ban" aria-hidden="true"></i> <b>{{ctl.EventoService.getNumCancelado()}}</b></a></li>
+    </ul-->
+  </div>
+  <br/>
+  <div class="row">
+    <span spinner-key="spinner-1" spinner-start-active="true"
+      us-spinner="{radius:24, width:8, length: 16}"/>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div ui-calendar="ctl.uiConfig.calendar" ng-model="ctl.eventSources">
+      </div>
+    </div>
+    <!--div class="col-sm-8">
+    </div>
+    <div class="col-sm-4">
+    </div-->
+  </div>
+
+  <hr/>
+
+  <!--ul class="breadcrumb">
+    <li class="completed"><a href="javascript:void(0);">Personal Contact</a></li>
+    <li class="active"><a href="javascript:void(0);">Educational/Experience</a></li>
+    <li><a href="javascript:void(0);">Photo Upload</a></li>
+    <li><a href="javascript:void(0);">Payment</a></li>
+  </ul>
+  <div class="process">
+    <div class="process-row">
+      <div class="process-step">
+        <button type="button" class="btn btn-default btn-circle">
+          <i class="fa fa-user fa-2x"></i></button>
+        <p>Personal data</p>
+      </div>
+      <div class="process-step">
+        <button type="button" class="btn btn-default btn-circle">
+          <i class="fa fa-comments-o fa-2x"></i></button>
+        <p>We confirm you</p>
+      </div>
+      <div class="process-step">
+        <button type="button" class="btn btn-default btn-circle">
+          <i class="fa fa-thumbs-up fa-3x"></i></button>
+        <p>Tiger comes</p>
+      </div>
+      <div class="process-step">
+        <button type="button" class="btn btn-default btn-circle">
+          <i class="fa fa-eur fa-3x"></i></button>
+        <p>You Pay</p>
+      </div>
+    </div>
+  </div-->
+</div>

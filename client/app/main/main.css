@@ -1,0 +1,246 @@
+body {
+background: #F2F2F2;
+padding-top: 70px;
+}
+
+@media (min-width: 768px) {
+  body {
+  padding-top: 100px;
+  }
+}
+.thing-form {
+  margin: 20px 0;
+}
+
+#banner {
+  border-bottom: none;
+  margin-top: -20px;
+}
+
+#banner h1 {
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.hero-unit {
+  position: relative;
+  padding: 30px 15px;
+  color: #F5F5F5;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  background: #4393B9;
+}
+
+.navbar-text {
+  margin-left: 15px;
+}
+
+.no-border {
+  border: none;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0px;
+}
+
+.breadcrumb {
+  padding: 0px;
+  background: #D4D4D4;
+  list-style: none;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.breadcrumb>li+li:before {
+  padding: 0;
+}
+
+.breadcrumb li {
+  float: left;
+}
+
+.breadcrumb li.active a {
+  background: brown;
+  /* fallback color */
+  background: #ffc107;
+}
+.breadcrumb li.completed a {
+  background: brown;
+  background: #5cb85c;
+}
+.breadcrumb li.completed a:after {
+  border-left: 30px solid #5cb85c;
+}
+.breadcrumb li.pending a {
+  background: brown;
+  background: #f0ad4e;
+}
+.breadcrumb li.pending a:after {
+  border-left: 30px solid #f0ad4e;
+}
+.breadcrumb li.inprocess a {
+  background: brown;
+  background: #428bca;
+}
+.breadcrumb li.inprocess a:after {
+  border-left: 30px solid #428bca;
+}
+.breadcrumb li.cancel a {
+  background: brown;
+  background: #d9534f;
+}
+.breadcrumb li.cancel a:after {
+  border-left: 30px solid #d9534f;
+}
+.breadcrumb li.in a {
+  background: brown;
+  background: #5cb85c;
+}
+.breadcrumb li.active a:after {
+  border-left: 30px solid #ffc107;
+}
+.breadcrumb li a {
+  color: white;
+  text-decoration: none;
+  padding: 5px 5px 5px 40px;
+  position: relative;
+  display: inline-block;
+}
+
+.breadcrumb li a:after {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent;
+  /* Go big on the size, and let overflow hide */
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid hsla(0, 0%, 83%, 1);
+  position: absolute;
+  top: 50%;
+  margin-top: -50px;
+  left: 100%;
+  z-index: 2;
+}
+
+.breadcrumb li a:before {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent;
+  /* Go big on the size, and let overflow hide */
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid white;
+  position: absolute;
+  top: 50%;
+  margin-top: -50px;
+  margin-left: 1px;
+  left: 100%;
+  z-index: 1;
+}
+
+.breadcrumb li:first-child a {
+  padding-left: 15px;
+}
+
+.breadcrumb li a:hover {
+  /*background: #ffc107;*/
+}
+
+.breadcrumb li a:hover:after {
+  /*border-left-color: #ffc107 !important;*/
+}
+
+.stepwizard-step p {
+  margin-top: 10px;
+}
+
+.process-row {
+  display: table-row;
+}
+
+.process {
+  display: table;
+  width: 100%;
+  position: relative;
+}
+
+.process-step button[disabled] {
+  opacity: 1 !important;
+  filter: alpha(opacity=100) !important;
+}
+
+.process-row:before {
+  top: 50px;
+  bottom: 0;
+  position: absolute;
+  content: " ";
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  z-order: 0;
+}
+
+.process-step {
+  display: table-cell;
+  text-align: center;
+  position: relative;
+}
+
+.process-step p {
+  margin-top: 10px;
+}
+
+.btn-circle {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle:focus {outline:none;}
+.fa-spinner-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+.navbar-custom {
+  /*background: #2C3E50;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;*/
+  font-weight: 700;
+  /*border: none;*/
+}
+
+@media (min-width: 768px) {
+  .navbar-custom {
+    padding: 15px 0;
+    -webkit-transition: padding 0.3s;
+    -moz-transition: padding 0.3s;
+    transition: padding 0.3s;
+  }
+  .navbar-custom .navbar-brand {
+    font-size: 2em;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  .navbar-custom.affix {
+    padding: 10px 0;
+  }
+  .navbar-custom.affix .navbar-brand {
+    font-size: 1.5em;
+  }
+}

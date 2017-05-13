@@ -1,0 +1,10 @@
+node_modules
+public
+dist
+client/bower_components
+client/index.html
+/server/config/local.env.js
+.tmp
+.idea
+coverage
+*.log

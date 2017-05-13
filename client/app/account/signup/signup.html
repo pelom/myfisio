@@ -1,0 +1,151 @@
+<div class="container">
+
+  <h1 class="page-header">
+  <i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+  Cadastre-se e crie sua conta</h1>
+
+  <div class="row">
+
+    <div class="col-md-8">
+
+      <div class="alert alert-success" ng-show="vm.conta">
+       <h4 class="alert-heading"><span class="glyphicon glyphicon-ok"></span>
+         &nbsp; <strong>Olá {{vm.user.nome }},</strong> sua conta foi criada com sucesso</h4>
+        <hr class="message-inner-separator">
+
+        <ul>
+          <li>Para acessá-la é necessária que você efetue a confirmação</li>
+          <li>A confirmação foi encaminhado para o seu endereço de email
+            <strong>{{vm.user.email}}</strong></li>
+          <li>Acesse o seu email e efetue a confirmação</li>
+        </ul>
+        <br/>
+        <a class="btn btn-success btn-lg btn-login" ui-sref="login">
+          <span class="glyphicon glyphicon-log-in" aria-hidden="true"> Entrar</a>
+      </div>
+
+      <div class="panel panel-default" ng-hide="vm.conta">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            Informe os dados solicitados</h3>
+        </div>
+
+        <form class="form" name="form" ng-submit="vm.register(form)" novalidate>
+          <br/>
+          <ul class="list-group no-margin-bottom">
+            <li class="list-group-item no-border">
+              <div class="row">
+                <div class="col-xs-6" ng-class="{ 'has-error': form.nome.$invalid && form.nome.$dirty}">
+                  <!--label>Nome</label-->
+                  <input type="text" name="nome" class="form-control" placeholder="Nome"
+                   ng-model="vm.user.nome" ng-required="true" ng-minlength="3"
+                    ng-maxlength="20" nomevalido="false" />
+
+                  <p class="help-block" ng-show="form.nome.$error.required && form.nome.$dirty">
+                    O nome é necessário</p>
+                  <p class="help-block" ng-show="form.nome.$error.pattern">
+                    Somente letras são permitidas</p>
+                  <p class="help-block" ng-show="form.nome.$error.minlength">
+                    São necessários no minimo 3 letras</p>
+                  <p class="help-block" ng-show="form.nome.$error.maxlength">
+                    São permitidos no máximo 20 letras</p>
+                </div>
+
+                <div class="col-xs-6" ng-class="{ 'has-error': form.sobrenome.$invalid && form.sobrenome.$dirty}">
+                  <!--label>Sobrenome</label-->
+                  <input type="text" name="sobrenome" class="form-control" placeholder="Sobrenome"
+                   ng-model="vm.user.sobrenome" ng-required="true" ng-minlength="3"
+                    ng-maxlength="40" nomevalido="true" />
+
+                  <p class="help-block" ng-show="form.sobrenome.$error.required && form.sobrenome.$dirty">
+                    O sobrenome é necessário</p>
+                  <p class="help-block" ng-show="form.sobrenome.$error.pattern">
+                    Somente letras são permitidas</p>
+                  <p class="help-block" ng-show="form.sobrenome.$error.minlength">
+                    São necessários no minimo 3 letras</p>
+                  <p class="help-block" ng-show="form.sobrenome.$error.maxlength">
+                    São permitidos no máximo 40 letras</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+          <ul class="list-group no-margin-bottom">
+            <li class="list-group-item no-border" ng-class="{ 'has-error': form.email.$invalid && form.email.$dirty}">
+              <input type="email" name="email" class="form-control" placeholder="email@email.com"
+               ng-pattern='/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i'
+                ng-model="vm.user.email" ng-required="true" mongoose-error/>
+
+              <p class="help-block" ng-show="form.email.$error.required && form.email.$dirty">
+                Qual é o seu e-mail?</p>
+              <p class="help-block" ng-show="form.email.$error.pattern">
+                O e-mail não parece válido.</p>
+              <p class="help-block" ng-show="form.email.$error.mongoose">
+                {{ vm.errors.email }}</p>
+            </li>
+          </ul>
+
+          <ul class="list-group no-margin-bottom">
+            <li class="list-group-item no-border">
+              <div class="row">
+
+                <div class="col-xs-6" ng-class="{ 'has-error': form.password.$invalid && form.password.$dirty }">
+                  <!--label>Senha</label-->
+                  <input type="password" name="password" class="form-control"
+                   placeholder="Digite uma senha" ng-maxlength="20"
+                    ng-model="vm.user.password" ng-required="true" mongoose-error/>
+
+                  <p><ul check-strength="vm.user.password"></ul></p>
+
+                  <p class="help-block" ng-show="form.password.$error.checkStrength && !form.password.$error.required && form.password.$dirty">
+                    Senha muito vunerável</p>
+                  <p class="help-block" ng-show="form.password.$error.required && form.password.$dirty">
+                    A senha é necessário</p>
+                  <!--p class="help-block" ng-show="(form.password.$error.minlength)">
+                    São necessários no minimo 6 caractéres</p-->
+                  <p class="help-block" ng-show="form.password.$error.maxlength">
+                    São permitidos no máximo 20 caractéres</p>
+                  <p class="help-block" ng-show="form.password.$error.mongoose">
+                    {{ vm.errors.password }}</p>
+                </div>
+
+                <div class="col-xs-6" ng-class="{ 'has-error': form.confirmPassword.$invalid && form.password.$dirty }">
+                  <!--label>Confirma Senha</label-->
+                  <input type="password" name="confirmPassword" class="form-control"
+                    ng-model="vm.user.confirmPassword" placeholder="Confirme a senha"
+                    match="form.password" ng-required="true"/>
+
+                  <p class="help-block" ng-show="form.confirmPassword.$error.match && !form.confirmPassword.$error.required">
+                    A senha confirmada não corresponde a senha informada</p>
+                </div>
+
+              </div>
+              <div ng-class="{ 'has-error': form.username.$invalid}">
+                <input type="hidden" name="username" ng-model="vm.user.username"/>
+                <p class="help-block">{{ vm.errors.username }}</p>
+              </div>
+            </li>
+          </ul>
+          <br/>
+          <div class="list-group-item no-border">
+            <button type="submit" class="btn btn-primary btn-lg" ng-disabled="form.$invalid">
+               Criar conta</button>
+            <!--a ui-sref="login">Entrar</a-->
+          </div>
+          <br/>
+          <!--div class="form-group"></div>
+          <div class="form-group"></div>
+          <div class="form-group"></div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-default btn-lg" ng-disabled="form.$invalid">
+              <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> Criar conta
+            </button>
+            <a class="btn btn-default btn-lg btn-login" ui-sref="login">Login</a>
+          </div-->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>

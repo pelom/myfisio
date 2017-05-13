@@ -1,0 +1,282 @@
+<div class="modal-header">
+  <button ng-if="modal.dismissable" type="button" ng-click="$dismiss()" class="close">&times;</button>
+
+  <h4><i class="fa {{ctl.event.icon}}" style="color:{{ctl.event.color}}" aria-hidden="true"></i>
+    <strong><span class="modal-title">{{ctl.event.title}}</span></strong></h4>
+</div>
+
+<div class="modal-body">
+  <p ng-if="modal.text" ng-bind="modal.text"></p>
+
+  <form class="form" novalidate name="form" ng-submit="ctl.saveEvent(form)">
+
+    <uib-tabset active="active">
+      <uib-tab>
+        <uib-tab-heading>Evento</uib-tab-heading>
+        <br/>
+        <div class="row">
+          <div class="col-xs-6">
+            <dl>
+              <dt><small>Procedimento</small></dt>
+              <dd ng-class="{'has-error': form.nomeMod.$invalid}">
+                <select class="form-control" ng-model="ctl.title"
+                  ng-disabled="!ctl.isEdit" name="nomeMod" ng-required="true"
+                  ng-options="item.name group by item.shade for item in ctl.procedimento"></select>
+
+                <!--input type="text" class="form-control" placeholder="Digite um nome"
+                 name="nomeMod" ng-model="ctl.event.title" ng-disabled="!ctl.isEdit"
+                  ng-required="true" ng-minlength="3" ng-maxlength="60" /-->
+
+                <p class="help-block" ng-show="form.nomeMod.$error.required">
+                  Selecione o procedimento</p>
+              </dd>
+            </dl>
+          </div>
+          <div class="col-xs-6">
+            <dl>
+              <dt><small>Quantidade</small></dt>
+              <dd ng-class="{'has-error': form.quantidade.$invalid}">
+                <select class="form-control" ng-model="ctl.event.quatidade"
+                  ng-disabled="!ctl.isEdit" name="quantidade" ng-required="true"
+                  ng-options="item as item for item in ctl.quantidade"></select>
+
+                <p class="help-block" ng-show="form.quantidade.$error.required">
+                  Selecione o procedimento</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <dl>
+              <dt><small>Leito</small></dt>
+              <dd ng-class="{'has-error': form.leito.$invalid}">
+                <select class="form-control" ng-model="ctl.event.leito"
+                  ng-disabled="!ctl.isEdit" ng-required="true" name="leito"
+                  ng-options="item as item for item in ctl.leito"></select>
+
+                <p class="help-block" ng-show="form.leito.$error.required">
+                    Selecione o leito</p>
+              </dd>
+            </dl>
+          </div>
+          <div class="col-xs-6">
+            <dl>
+              <dt><small>Convênio</small></dt>
+              <dd ng-class="{'has-error': form.convenio.$invalid}">
+                <select class="form-control" ng-model="ctl.event.convenio"
+                  ng-disabled="!ctl.isEdit" ng-required="true" name="convenio"
+                  ng-options="item as item for item in ctl.convenio"></select>
+
+                <p class="help-block" ng-show="form.convenio.$error.required">
+                  Selecione o convênio</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <!--div class="row">
+          <div class="col-xs-6">
+            <dl>
+              <dt><small>Data</small></dt>
+              {{ctl.form.dateStart.$error}}
+              <dd ng-class="{'has-error': form.dateStart.$invalid}">
+                <p class="input-group">
+                  <input type="text" class="form-control" name="dateStart"
+                    ng-model="ctl.event.start" ng-disabled="!ctl.isEdit"
+                    uib-datepicker-popup="{{ctl.format}}"
+                    is-open="ctl.popup1.opened" datepicker-options="ctl.dateOptions"
+                    ng-required="true" show-button-bar="false"/>
+                  <span class="input-group-btn">
+                   <button type="button" class="btn btn-default"
+                   ng-click="ctl.popup1.opened = true;">
+                   <i class="fa fa-calendar" aria-hidden="true"></i></button>
+                  </span>
+                </p>
+                <p class="help-block"
+                  ng-show="form.dateStart.$error.required && form.dateStart.$dirty">
+                  A Data é necessária</p>
+
+                <p class="help-block"
+                    ng-show="form.dateStart.$error.startBeforeNow">
+                    A Data deve ser posterior a data de agora</p>
+
+               </dd>
+            </dl>
+          </div>
+          <div class="col-xs-6">
+            <dl ng-show="!ctl.event.allDay">
+              <dt><small>Horário</small></dt>
+              <dd>
+                <div uib-timepicker ng-model="ctl.event.start" readonly-input="!ctl.isEdit"
+                  hour-step="ctl.hstep" minute-step="ctl.mstep" show-meridian="false" show-spinners="false"></div>
+               </dd>
+            </dl>
+          </div>
+        </div-->
+        <!--div class="row">
+          <div class="col-xs-6">
+            <dl>
+              <dt><small>Data Término</small></dt>
+              <dd ng-class="{'has-error': form.dateEnd.$invalid}">
+                <p class="input-group">
+                  <input type="text" class="form-control" name="dateEnd"
+                    ng-model="ctl.event.end" ng-disabled="!ctl.isEdit"
+                    uib-datepicker-popup="{{ctl.format}}"
+                    is-open="ctl.popup2.opened" datepicker-options="ctl.dateOptions"
+                    show-button-bar="false"/>
+                  <span class="input-group-btn">
+                   <button type="button" class="btn btn-default"
+                   ng-click="ctl.popup2.opened = true;">
+                   <i class="fa fa-calendar" aria-hidden="true"></i></button>
+                  </span>
+                </p>
+                <p class="help-block" ng-show="form.dateEnd.$error.endBeforeStart">
+                  A Data de Término deve estar após a Data.</p>
+               </dd>
+            </dl>
+          </div>
+          <div class="col-xs-6">
+            <dl ng-show="!ctl.event.allDay">
+              <dt><small>Horário Término</small></dt>
+              <dd>
+                <div uib-timepicker ng-model="ctl.event.end" readonly-input="!ctl.isEdit"
+                  hour-step="ctl.hstep" minute-step="ctl.mstep"
+                  show-meridian="false" show-spinners="false"></div>
+               </dd>
+            </dl>
+          </div>
+        </div-->
+        <div class="row" ng-if="ctl.event._id">
+          <div class="col-xs-6">
+            <dl>
+              <dt><small>Criado</small></dt>
+              <dd><small>{{ ctl.event.createdAt | date:'dd/MM/yyyy HH:mm' }} por
+                <strong>{{ctl.event.criador.nome}} {{ctl.event.criador.sobrenome}}</strong></small></dd>
+            </dl>
+          </div>
+          <div class="col-xs-6">
+            <dl>
+              <dt><small>Modificado</small></dt>
+              <dd><small>{{ ctl.event.updatedAt | date:'dd/MM/yyyy HH:mm' }} por
+                <strong>{{ctl.event.modificador.nome}} {{ctl.event.modificador.sobrenome}}</strong></small></dd>
+            </dl>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab>
+        <uib-tab-heading>Informações</uib-tab-heading>
+        <br/>
+        <!--div class="row">
+          <div class="col-sm-6">
+            <dl>
+              <dt><small>Status</small></dt>
+              <dd>
+                <select class="form-control" ng-model="ctl.event.status" ng-disabled="!ctl.isEdit"
+                 ng-options="item as item for item in ctl.status"></select>
+               </dd>
+            </dl>
+          </div>
+          <div class="col-sm-6">
+            <dl>
+              <dt><small>Prioridade</small></dt>
+              <dd>
+                <select class="form-control" ng-model="ctl.event.prioridade" ng-disabled="!ctl.isEdit"
+                 ng-options="item as item for item in ctl.prioridade"></select>
+               </dd>
+            </dl>
+          </div>
+        </div-->
+        <div class="row">
+          <div class="col-md-12">
+            <textarea class="form-control" rows="4" placeholder="Descrição"
+              ng-model="ctl.event.descricao" ng-disabled="!ctl.isEdit"></textarea>
+          </div>
+        </div>
+        <br/>
+        <!--div class="row">
+          <div class="col-md-12">
+            <dl>
+              <dt><small>Local</small></dt>
+              <dd>
+                <input type="text" class="form-control" name="local"
+                  ng-model="ctl.event.local" ng-disabled="!ctl.isEdit"/>
+              </dd>
+            </dl>
+          </div>
+        </div-->
+        <!--div class="row" ng-show="ctl.event.origin._id">
+          <div class="col-xs-12">
+            <label>Origem</label>
+          </div>
+          <div class="col-xs-6">
+            <a href="#" ui-sref="home({eventId: ctl.event.origin._id})">{{ctl.event.origin.title}}</a>
+          </div>
+          <div class="col-sm-3">
+            <small>{{ ctl.event.origin.start | date:'dd/MM/yyyy HH:mm' }}</small>
+          </div>
+          <div class="col-sm-3">
+            <small>{{ ctl.event.origin.status }}</small>
+          </div>
+        </div-->
+        <br/>
+        <div class="row">
+          <div class="col-xs-6">
+            <dl ng-show="ctl.event._id">
+              <dt><small>Proprietário</small></dt>
+              <dd><small>{{ctl.event.proprietario.nome}} {{ctl.event.proprietario.sobrenome}}</small></dd>
+            </dl>
+          </div>
+          <!--div class="col-xs-6">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="ctl.event.allDay" ng-disabled="!ctl.isEdit"> Dia inteiro
+              </label>
+            </div>
+          </div-->
+        </div>
+      </uib-tab>
+      <!--uib-tab ng-show="ctl.event.tarefas.length">
+        <uib-tab-heading>Tarefas <span class="badge">{{ctl.event.tarefas.length}}</span></uib-tab-heading>
+        <br/>
+        <p>Total de horas: {{ctl.durationTotal}}</p>
+        <hr/>
+        <div ng-repeat="task in ctl.event.tarefas">
+          <div class="row">
+            <div class="col-md-6">
+              <i class="fa {{task.icon}}" style="color:{{task.color}}" aria-hidden="true"></i>&nbsp;
+              <a href="#" ui-sref="home({eventId: task._id})">{{task.title}}</a>
+            </div>
+            <div class="col-xs-3">
+              <small>{{ task.start | date:'dd/MM/yyyy HH:mm' }}</small>
+            </div>
+            <div class="col-xs-3">
+              <small ng-if="task.end">{{ task.end | date:'dd/MM/yyyy HH:mm' }}</small>
+              <small ng-if="!task.end">-</small>
+            </div>
+            <div class="col-xs-3">
+              <small ng-if="task.duration">{{ task.duration }}</small>
+              <small ng-if="!task.duration">-</small>
+            </div>
+          </div>
+          <br/>
+        </div>
+      </uib-tab-->
+    </uib-tabset>
+    <div class="row"><hr/></div>
+    <div class="row">
+      <div class="col-xs-12">
+        <button type="submit" class="btn btn-primary" ng-show="ctl.isEdit"
+          ng-disabled="form.$invalid">Salvar</button>
+
+        <button type="submit" class="btn" ng-show="ctl.isEdit"
+            ng-disabled="form.$invalid">Salvar e Criar Novo</button>
+
+        <!--button type="button" class="btn btn-default" ng-show="ctl.isEdit && ctl.event._id"
+              ng-click="ctl.newTask()">Nova Tarefa</button-->
+        <button type="button" class="btn btn-default"
+          ng-click="ctl.close()">Fechar</button>
+
+      </div>
+    </div>
+  </form>
+</div>

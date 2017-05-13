@@ -1,0 +1,72 @@
+<div class="container">
+	<div class="row">
+    <!--h3><i class="fa fa-user-circle" aria-hidden="true"></i> Perfil</h3-->
+    <hr/>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>Perfil - <small>{{ctl.meProfile.nome}} {{ctl.meProfile.sobrenome}}</small></h4>
+        </div>
+        <div class="panel-body">
+          <div class="box box-info">
+            <div class="box-body">
+              <div class="col-sm-6">
+                <div align="center">
+                  <a href="#">
+                    <i class="fa fa-user-circle fa-4x " aria-hidden="true"></i>
+                    <div>{{ctl.meProfile.nome}} {{ctl.meProfile.sobrenome}}</div>
+                  </a>
+                </div>
+                <br>
+              </div>
+              <div class="col-sm-6">
+                <h4>{{ctl.meProfile.nome}}</h4>
+                <span><p>{{ctl.meProfile.username}}</p></span>
+              </div>
+              <div class="clearfix"></div>
+              <hr style="margin:5px 0 5px 0;">
+
+              <div class="col-sm-5 col-xs-6 tital"><small>Email</small></div>
+              <div class="col-sm-7"><label>{{ctl.meProfile.email}}</label></div>
+              <div class="clearfix"></div>
+              <div class="bot-border"></div>
+
+              <div class="col-sm-5 col-xs-6 tital "><small>Celular</small></div>
+              <div class="col-sm-7">{{ctl.meProfile.celular}}</div>
+              <div class="clearfix"></div>
+              <div class="bot-border"></div>
+
+              <div class="col-sm-5 col-xs-6 tital "><small>Endereço</small></div>
+              <div class="col-sm-7">{{ctl.meProfile.endereco.address}}
+                <span ng-if="ctl.meProfile.endereco.number">
+                  , {{ctl.meProfile.endereco.number}}</span></div>
+              <div class="clearfix"></div>
+              <div class="bot-border"></div>
+
+              <div class="col-sm-5 col-xs-6 tital "></div>
+              <div class="col-sm-7">{{ctl.meProfile.endereco.suburb}}
+                <span ng-if="ctl.meProfile.endereco.zipcode">
+                  - {{ctl.meProfile.endereco.zipcode}}</span></div>
+
+              <div class="clearfix"></div>
+              <div class="bot-border"></div>
+
+              <div class="col-sm-5 col-xs-6 tital "></div>
+              <div class="col-sm-7">{{ctl.meProfile.endereco.city}}
+                <span ng-if="ctl.meProfile.endereco.state">
+                  - {{ctl.meProfile.endereco.state}}</span>
+              </div>
+
+              <div class="clearfix"></div>
+              <div class="bot-border"></div>
+
+              <div class="col-sm-5 col-xs-6 tital "><small>Empresa</small></div>
+              <div class="col-sm-7">{{ctl.meProfile.empresa}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>

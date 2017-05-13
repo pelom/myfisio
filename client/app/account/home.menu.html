@@ -1,0 +1,73 @@
+<div class="container">
+  <h3>
+    <i class="fa fa-bars" aria-hidden="true"></i> Menu
+  </h3>
+  <hr/>
+  <div class="row">
+    <div class="col-sm-4" ng-repeat="model in ctl.getCurrentUser().application[0].modulos">
+      <div class="panel panel-info">
+        <a ui-sref="{{model.state}}">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6">
+                <i class="fa {{model.icon}} fa-3x"></i>
+              </div>
+              <div class="col-xs-6 text-right">
+                <p class="lead">18</p>
+                <!--p class="announcement-text">Users</p-->
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-footer">
+            <div class="row">
+              <div class="col-xs-6">
+                <label>{{model.nome}}</label>
+              </div>
+              <div class="col-xs-6 text-right">
+                <i class="fa fa-arrow-circle-right"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <!--ul class="breadcrumb">
+    <li class="completed"><a href="javascript:void(0);">Personal Contact</a></li>
+    <li class="active"><a href="javascript:void(0);">Educational/Experience</a></li>
+    <li><a href="javascript:void(0);">Photo Upload</a></li>
+    <li><a href="javascript:void(0);">Payment</a></li>
+  </ul>
+
+  <ul class="breadcrumb">
+    <li class="completed"><a href="javascript:void(0);">about</a></li>
+    <li class="active"><a href="javascript:void(0);">business</a></li>
+    <li><a href="javascript:void(0);">gallery</a></li>
+  </ul-->
+  <!--div class="process">
+    <div class="process-row">
+      <div class="process-step">
+        <button type="button" class="btn btn-default btn-circle">
+          <i class="fa fa-user fa-2x"></i></button>
+        <p>Personal data</p>
+      </div>
+      <div class="process-step">
+        <button type="button" class="btn btn-default btn-circle">
+          <i class="fa fa-comments-o fa-2x"></i></button>
+        <p>We confirm you</p>
+      </div>
+      <div class="process-step">
+        <button type="button" class="btn btn-default btn-circle">
+          <i class="fa fa-thumbs-up fa-3x"></i></button>
+        <p>Tiger comes</p>
+      </div>
+      <div class="process-step">
+        <button type="button" class="btn btn-default btn-circle">
+          <i class="fa fa-eur fa-3x"></i></button>
+        <p>You Pay</p>
+      </div>
+    </div>
+  </div-->
+</div>

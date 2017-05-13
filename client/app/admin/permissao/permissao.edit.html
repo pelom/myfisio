@@ -1,0 +1,196 @@
+<div class="container">
+  <div >
+    <p><a ui-sref="permissoes"><small>Voltar para permissões</small></a></p>
+    <!--h4><i class="fa fa-cubes" aria-hidden="true"></i> Perfil do usuário</h4-->
+    <!--p>Um perfil é responsável por agrupar o conjunto de permissões do usuário</p-->
+    <!--hr/-->
+    <span spinner-key="spinner-1" spinner-start-active="true"
+      us-spinner="{radius:24, width:8, length: 16}"/>
+
+    <form class="form" name="formProfile" novalidate
+      ng-submit="ctl.saveProfile(formProfile)">
+
+      <div class="panel panel-default" >
+        <div class="panel-body">
+          <h4>
+            <i class="fa fa-cubes" aria-hidden="true"></i>
+            &nbsp;<label>{{ ctl.profile.nome }}</label>
+            &nbsp;<small>{{ ctl.profile.role }}</small>
+          </h4>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-6">
+              <dl>
+                <dt><small>Nome do perfil</small></dt>
+                <dd ng-class="{'has-error': formProfile.profileNome.$invalid && formProfile.profileNome.$dirty}">
+                  <input type="text" name="profileNome" class="form-control" placeholder="Nome perfil"
+                   ng-model="ctl.profile.nome" ng-required="true" ng-minlength="3" ng-maxlength="30"
+                    nomevalido="false" />
+
+                  <p class="help-block"
+                    ng-show="formProfile.profileNome.$error.required && formProfile.profileNome.$dirty">
+                    O sobrenome é necessário</p>
+                  <p class="help-block" ng-show="formProfile.profileNome.$error.minlength">
+                    São necessários no minimo 3 letras</p>
+                  <p class="help-block" ng-show="formProfile.profileNome.$error.maxlength">
+                    São permitidos no máximo 30 letras</p>
+                </dd>
+              </dl>
+            </div>
+            <div class="col-sm-6">
+              <dl>
+                <dt><small>Papel do perfil</small></dt>
+                <dd>
+                  <select class="form-control" ng-model="ctl.profile.role"
+                    ng-disabled="ctl.profile._id"
+                     ng-options="item.value as item.label for item in ctl.itemRole">
+                  </select>
+                </dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <dl>
+                <!--dt><small>Descrição</small></dt-->
+                <dd>
+                  <textarea class="form-control" rows="3" placeholder="Descrição"
+                    ng-model="ctl.profile.descricao"></textarea>
+                 </dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="row" ng-if="ctl.profile._id">
+            <div class="col-sm-6">
+              <dl >
+                <dt><small>Situação</small></dt>
+                <dd>
+                  <select class="form-control" ng-model="ctl.profile.isAtivo"
+                   ng-options="item.value as item.name for item in ctl.situacao"></select>
+                 </dd>
+              </dl>
+            </div>
+            <div class="col-sm-6">
+              <!--dl>
+                <dt><small>Descrição</small></dt>
+                <dd>
+                  <textarea class="form-control" rows="3" placeholder="Descrição"
+                    ng-model="ctl.profile.descricao"></textarea>
+                 </dd>
+              </dl-->
+            </div>
+          </div>
+
+          <div class="row" ng-if="ctl.profile._id">
+            <div class="col-sm-6">
+              <dl>
+                <dt><small>Criado</small></dt>
+                <dd>
+                  <small>{{ ctl.profile.createdAt | date:'dd/MM/yyyy HH:mm' }} por
+                  <strong>{{ctl.profile.criador.nome}} {{ctl.profile.criador.sobrenome}}</strong>
+                  </small>
+                </dd>
+              </dl>
+            </div>
+            <div class="col-sm-6">
+              <dl>
+                <dt><small>Modificado</small></dt>
+                <dd>
+                  <small>{{ ctl.profile.updatedAt | date:'dd/MM/yyyy HH:mm' }} por
+                  <strong>{{ ctl.profile.modificador.nome}} {{ ctl.profile.modificador.sobrenome}}</strong>
+                  </small>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <br/>
+          <h4><label>Configurações da sessão</label></h4>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-6">
+              <dl>
+                <dt><small>Sessão expira após</small></dt>
+                <dd>
+                  <select class="form-control" ng-model="ctl.profile.tempoSessao"
+                     ng-options="item.value as item.label for item in ctl.itemSessao">
+                  </select>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="row"><hr/></div>
+          <div class="list-group">
+            <button class="btn btn-primary" type="submit"
+              ng-disabled="formProfile.$invalid || ctl.wait">
+                <loading showhidden="ctl.wait"></loading> Salvar</button>
+
+            <button type="button" class="btn btn-link"
+              ui-sref="permissoes">Voltar</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default" >
+        <div class="panel-body">
+          <h4><label>Conjuntos de permissões</label> <small></small></h4>
+          <hr/>
+          <div class="" ng-repeat="app in ctl.AplicacaoService.getAppList()">
+            <div class="list-group-item">
+              <h5>
+                <a href="" ng-click="app.isCollapsed = !app.isCollapsed">
+                  <i class="fa fa-rocket" aria-hidden="true"></i>
+                  {{app.nome}}
+                </a>
+                <small>{{app.descricao}}</small>
+              </h5>
+            </div>
+
+            <div class="table-responsive" uib-collapse="app.isCollapsed">
+              <table class="table table-hover table-bordered">
+                <tbody>
+                  <tr class="active" ng-repeat="m in app.modulos">
+                    <!--td><small uib-tooltip="{{m.descricao}}">{{ m.nome}}</small></td-->
+                    <td>
+                      <p uib-tooltip="{{m.descricao}}">
+                        <i class="fa {{m.icon}}" aria-hidden="true"></i>
+                        &nbsp;<label><small>{{ m.nome}}</small></label>
+                        <small ng-if="md.descricao"> - {{m.descricao}}</small>
+                      </p>
+                      <a href="#" ng-click="ctl.addAllFuncoes(m)"
+                        uib-tooltip="Adicionar todas as funções">
+                        Adicionar todas</a>
+                      <a href="#" ng-click="ctl.removeAllFuncoes(m)"
+                          uib-tooltip="Remover todas as funções">
+                        Remover todas</a>&nbsp;
+                      <ui-select multiple remove-selected="false" theme="bootstrap"
+                        title="Selecione as funções"
+                        ng-model="m.select.funcoes" close-on-select="false">
+                        <ui-select-match placeholder="Selecione as funções">
+                          <strong>{{ $item }}</strong>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in (m.funcoes | filter: $select.search) track by item">
+                            <!--span ng-bind="item.name"></span-->
+                            <div ng-bind-html="item | highlight: $select.search"></div>
+                        </ui-select-choices>
+                      </ui-select>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row"><hr/></div>
+          <div class="list-group">
+            <button class="btn btn-primary" type="submit"
+              ng-disabled="formProfile.$invalid || ctl.wait">
+                <loading showhidden="ctl.wait"></loading> Salvar</button>
+
+            <button type="button" class="btn btn-link"
+              ui-sref="permissoes">Voltar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

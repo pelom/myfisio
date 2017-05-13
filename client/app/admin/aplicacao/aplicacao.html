@@ -1,0 +1,131 @@
+<div class="container">
+  <div>
+    <p><a ui-sref="home"><small>Voltar para o início</small></a></p>
+    <h2><i class="fa fa-rocket" aria-hidden="true"></i> Aplicações</h2>
+    <p>A aplicação é responsável por agrupar o conjunto de módulos, disponibilizados para acesso aos usuários</p>
+    <hr/>
+    <span spinner-key="spinner-1" spinner-start-active="true"
+      us-spinner="{radius:24, width:8, length: 16}">
+    </span>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="btn-group">
+              <a class="btn btn-default" ui-sref="aplicacoesedit()">
+                <i class="fa fa-plus" aria-hidden="true"></i> Novo</a>
+            </div>
+          </div>
+          <div class="col-xs-6 pull-right form-group">
+            <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-search"></i></div>
+              <input type="text" class="form-control" placeholder="Filtrar resultados"
+               ng-model="filtrarResult">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr class="active">
+              <th></th>
+              <th>
+                <a href="#" ui-sref-active="active"
+                  ng-click="sortType = 'nome'; sortReverse = !sortReverse">
+                  <strong>Nome<strong>
+                  <div class="pull-right">
+                    <span ng-show="sortType == 'nome' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'nome' && sortReverse" class="fa fa-caret-up"></span>
+                  </div>
+                </a>
+              </th>
+              <th>
+                <a href="#" ui-sref-active="active"
+                  ng-click="sortType = 'descricao'; sortReverse = !sortReverse">
+                  <strong>Descrição<strong>
+                  <div class="pull-right">
+                    <span ng-show="sortType == 'descricao' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'descricao' && sortReverse" class="fa fa-caret-up"></span>
+                  </div>
+                </a>
+              </th>
+              <th>
+                <a href="#" ui-sref-active="active"
+                  ng-click="sortType = 'isAtivo'; sortReverse = !sortReverse">
+                  <strong>Situação</strong>
+                  <div class="pull-right">
+                    <span ng-show="sortType == 'isAtivo' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'isAtivo' && sortReverse" class="fa fa-caret-up"></span>
+                  </div>
+                </a>
+              </th>
+              <th>
+                <a href="#" ui-sref-active="active"
+                  ng-click="sortType = 'updatedAt'; sortReverse = !sortReverse">
+                  <strong>Modificador</strong>
+                  <div class="pull-right">
+                    <span ng-show="sortType == 'updatedAt' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'updatedAt' && sortReverse" class="fa fa-caret-up"></span>
+                  </div>
+                </a>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="ap in ctl.appList() | orderBy:sortType:sortReverse | filter:filtrarResult">
+              <td>
+                <a href="#" ui-sref="aplicacoesedit({id: ap._id})" uib-tooltip="Editar">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+              </td>
+              <td><a href="#" ui-sref="aplicacoesedit({id: ap._id})"
+                ui-sref-active="active"><small>{{ ap.nome }}</small></a></td>
+              <td><small>{{ ap.descricao}}</small></td>
+              <td>
+                <small ng-if="ap.isAtivo == true">
+                <span class="label label-success">Ativo</span></small>
+              <small ng-if="ap.isAtivo == false">
+                <span class="label label-danger">Desativo</span></small>
+              </td>
+              <td>
+                <small>{{ ap.updatedAt | date:'dd/MM/yyyy HH:mm' }} por
+                  <a href="#" ui-sref="usuarioedit({id: ap.modificador._id})"
+                      ui-sref-active="active" uib-tooltip="Ver usuário">
+                    {{ ap.modificador.nome}} {{ ap.modificador.sobrenome}}</a></small>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!--div class="panel-footer">
+          <div class="col-xs-3">
+            <div class="dataTables_info" id="example_info">Showing 51 - 60 of 100 total results</div>
+          </div>
+          <div class="col-xs-6">
+            <div class="dataTables_paginate paging_bootstrap">
+              <ul class="pagination pagination-sm" style="margin:0 !important">
+                <li class="prev disabled"><a href="#">← Previous</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li class="next disabled"><a href="#">Next → </a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+              10 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" style="min-width: 0px ">
+              <li><a href="#">5</a></li>
+              <li class="active"><a href="#">10</a></li>
+              <li><a href="#">15</a></li>
+              <li><a href="#">15</a></li>
+            </ul>
+          </div>
+        </div-->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="container">
+  <div>
+    <p><a ui-sref="home"><small>Voltar para o início</small></a></p>
+    <h2><i class="fa fa-users" aria-hidden="true"></i> Usuários</h2>
+    <p>Usuários cadastrados com acesso a plataforma</p>
+    <hr/>
+    <span spinner-key="spinner-1" spinner-start-active="true"
+      us-spinner="{radius:24, width:8, length: 16}">
+    </span>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="btn-group">
+              <a class="btn btn-default" ui-sref="usuarioedit()">
+                <i class="fa fa-plus" aria-hidden="true"></i> Novo</a>
+              <!--a class="btn btn-default"><span> Edit</span></a>
+              <a class="btn btn-default"><span>Delete</span></a-->
+            </div>
+          </div>
+          <div class="col-xs-6 pull-right form-group">
+            <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-search"></i></div>
+              <input type="text" class="form-control" placeholder="Filtrar resultados"
+               ng-model="filtrarResult">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr class="active">
+              <th></th>
+              <th>
+                <a href="#" ui-sref-active="active"
+                  ng-click="sortType = 'nome'; sortReverse = !sortReverse">
+                  <strong>Nome<strong>
+                  <div class="pull-right">
+                    <span ng-show="sortType == 'nome' && !sortReverse" class="fa fa-sort-amount-asc"></span>
+                    <span ng-show="sortType == 'nome' && sortReverse" class="fa fa-sort-amount-desc"></span>
+                  </div>
+                </a>
+              </th>
+              <th>
+                <a href="#" ui-sref-active="active"
+                  ng-click="sortType = 'username'; sortReverse = !sortReverse">
+                  <strong>Usuário<strong>
+                  <div class="pull-right">
+                    <span ng-show="sortType == 'username' && !sortReverse"
+                      class="fa fa-sort-amount-asc"></span>
+                    <span ng-show="sortType == 'username' && sortReverse"
+                      class="fa fa-sort-amount-desc"></span>
+                  </div>
+                </a>
+              </th>
+              <th>
+                <a href="#" ui-sref-active="active"
+                  ng-click="sortType = 'profileId.nome'; sortReverse = !sortReverse">
+                  <strong>Perfil<strong>
+                  <div class="pull-right">
+                    <span ng-show="sortType == 'profileId.nome' && !sortReverse"
+                      class="fa fa-sort-amount-asc"></span>
+                    <span ng-show="sortType == 'profileId.nome' && sortReverse"
+                      class="fa fa-sort-amount-desc"></span>
+                  </div>
+                </a>
+              </th>
+              <th>
+                <a href="#" ui-sref-active="active"
+                  ng-click="sortType = 'isAtivo'; sortReverse = !sortReverse">
+                  <strong>Situação</strong>
+                  <div class="pull-right">
+                    <span ng-show="sortType == 'isAtivo' && !sortReverse" class="fa fa-sort-amount-asc"></span>
+                    <span ng-show="sortType == 'isAtivo' && sortReverse" class="fa fa-sort-amount-desc"></span>
+                  </div>
+                </a>
+              </th>
+              <th>
+                <a href="#" ui-sref-active="active"
+                  ng-click="sortType = 'updatedAt'; sortReverse = !sortReverse">
+                  <strong>Modificador</strong>
+                  <div class="pull-right">
+                    <span ng-show="sortType == 'updatedAt' && !sortReverse" class="fa fa-sort-amount-asc"></span>
+                    <span ng-show="sortType == 'updatedAt' && sortReverse" class="fa fa-sort-amount-desc"></span>
+                  </div>
+                </a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="us in  ctl.users | orderBy:sortType:sortReverse | filter:filtrarResult">
+              <td>
+                <a href="#" uib-tooltip="Editar" ui-sref="usuarioedit({id: us._id})">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+              </td>
+              <td><a href="#" ui-sref="usuarioedit({id: us._id})"
+                  ui-sref-active="active"><small>{{ us.nome }} {{ us.sobrenome }}</small></a></td>
+              <td><a href="#" ui-sref="usuarioedit({id: us._id})"
+                  ui-sref-active="active"><small>{{ us.username }}</small></a></td>
+              <td><a href="#" ui-sref="permissoesedit({id: us.profileId._id})"
+                  ui-sref-active="active" uib-tooltip="Ver perfil">
+                  <small>{{ us.profileId.nome }}</small></a></td>
+              <td>
+                <small ng-if="us.isAtivo === true">
+                  <span class="label label-success">Ativo</span></small>
+                <small ng-if="us.isAtivo === false">
+                  <span class="label label-danger">Desativo</span></small>
+              </td>
+              <td>
+                <small>{{ us.updatedAt | date:'dd/MM/yyyy HH:mm' }} por
+                  <a href="#" ui-sref="usuarioedit({id: us.modificador._id})"
+                      ui-sref-active="active" uib-tooltip="Ver usuário">
+                    {{ us.modificador.nome}} {{ us.modificador.sobrenome}}</a></small>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
