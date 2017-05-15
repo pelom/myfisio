@@ -7,7 +7,7 @@ export default class HomeController {
   /*@ngInject*/
   constructor($stateParams, $location, EventoService, toastr, usSpinnerService, Modal) {
     this.$stateParams = $stateParams;
-    this.defaultView = $stateParams.defaultView || 'listWeek';
+    this.defaultView = $stateParams.defaultView || 'listDay';
     this.defaultDate = $stateParams.defaultDate || new Date();
     this.defaultStatus = $stateParams.defaultStatus || null;
     this.startInterval = null;
@@ -60,16 +60,22 @@ export default class HomeController {
       viewRender: view /*element*/ => {
         this.findEventListView(view);
       },
-      eventRender: (event, element) => {
-        element.attr('title', event.start.format('LLLL'));
-        //element.find('.fc-title').after('<div ></div>');
-        //element.find('.fc-title').attr('popover-trigger', 'mouseenter');
-        element.find('.fc-title')
-          .html(`<i class="fa ${event.icon}" aria-hidden="true"></i> <b>${event.title}</b>`);
-        if(event.origin) {
-          element.find('.fc-title').after(
-            `&nbsp;<span style="color: #777;">[${event.origin.title}]</span>`);
+      eventRender: (event, element, view) => {
+        if(view.name == 'listDay') {
+          let sCell = `<b><span class="badge">${event.quantidade}</span> ${event.title}</b><br/><span class="label label-success">${event.leito}</span> - ${event.convenio}`;
+          element.find('td.fc-list-item-title').html(sCell);
+        } else {
+          element.attr('title', event.start.format('LLLL'));
+          //element.find('.fc-title').after('<div ></div>');
+          //element.find('.fc-title').attr('popover-trigger', 'mouseenter');
+          element.find('.fc-title')
+            .html(`<i class="fa ${event.icon}" aria-hidden="true"></i> <b>${event.title}</b>`);
+          if(event.origin) {
+            element.find('.fc-title').after(
+              `&nbsp;<span style="color: #777;">[${event.origin.title}]</span>`);
+          }
         }
+
         /*if(event.start.hasZone()) {
           element.find('.fc-title').after(event.start.format('Z'));
         }*/
@@ -212,8 +218,11 @@ export default class HomeController {
   }
 
   addEvento() {
+    console.log('this.defaultDate;', this.defaultDate);
+    let hourFormat = moment().format('HH:mm');
+    let dateFormat = `${this.defaultDate} ${hourFormat}`;
     let evento = {
-      start: new Date()
+      start: moment(dateFormat).toDate()
     };
     this.openModalEvent(evento);
   }

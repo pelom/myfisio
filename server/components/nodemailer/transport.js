@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 
 export default class Transport {
   send(message, callback) {
-    ApplicationModulo.findOne({nome: 'Servidor Email'}, 'serveEmail')
+    ApplicationModulo.findOne({ nome: 'Servidor Email' }, 'property')
       .exec()
       .then(modulo => {
         if(!modulo) {
@@ -12,10 +12,10 @@ export default class Transport {
           return;
         }
         let emailTransportOptions = {
-          service: modulo.serveEmail.service,
+          service: modulo.property.service,
           auth: {
-            user: modulo.serveEmail.user,
-            pass: modulo.serveEmail.password
+            user: modulo.property.user,
+            pass: modulo.property.password
           }
         };
         let nodeMail = nodemailer.createTransport(emailTransportOptions);

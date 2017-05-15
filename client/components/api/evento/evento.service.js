@@ -118,6 +118,9 @@ export function EventoService(EventoResource, Util) {
         isAtivo: newEvent.isAtivo,
         proprietario: newEvent.proprietario,
         origin: newEvent.origin,
+        leito: newEvent.leito,
+        quantidade: newEvent.quantidade,
+        convenio: newEvent.convenio,
       };
       if(angular.isUndefined(event._id)) {
         return EventoResource.save(event, function(data) {

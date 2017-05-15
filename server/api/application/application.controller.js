@@ -127,7 +127,8 @@ function requestCreateModulo(req) {
     funcoes: req.body.funcoes,
     criador: req.user._id,
     modificador: req.user._id,
-    application: req.params.id
+    application: req.params.id,
+    property: req.body.property,
   };
 }
 
@@ -159,7 +160,8 @@ function requestUpdateModulo(req) {
     descricao: req.body.descricao,
     funcoes: req.body.funcoes,
     isAtivo: req.body.isAtivo,
-    modificador: req.user._id
+    modificador: req.user._id,
+    property: req.body.property,
   };
 }
 function callbackUpdateModulo(res) {

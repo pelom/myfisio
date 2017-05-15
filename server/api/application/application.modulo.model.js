@@ -23,6 +23,7 @@ var ApplicationModuloSchema = new Schema({
     user: {type: String },
     password: {type: String }
   },
+  property: Schema.Types.Mixed,
   criador: { type: Schema.Types.ObjectId, ref: 'User' },
   modificador: { type: Schema.Types.ObjectId, ref: 'User' },
   application: { type: Schema.Types.ObjectId, ref: 'Application' }

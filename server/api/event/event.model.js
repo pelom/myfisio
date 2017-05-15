@@ -21,7 +21,10 @@ var EventSchema = new Schema({
   origin: { type: Schema.Types.ObjectId, ref: 'Event' },
   proprietario: { type: Schema.Types.ObjectId, ref: 'User' },
   criador: { type: Schema.Types.ObjectId, ref: 'User' },
-  modificador: { type: Schema.Types.ObjectId, ref: 'User'}
+  modificador: { type: Schema.Types.ObjectId, ref: 'User'},
+  leito: String,
+  quantidade: Number,
+  convenio: String,
 }, {
   timestamps: true
 });

@@ -74,7 +74,7 @@ export function AplicacaoService(Util, AplicacaoResource, AplicacaoModuloResourc
         _id: newApp._id,
         nome: newApp.nome,
         descricao: newApp.descricao,
-        isAtivo: newApp.isAtivo,
+        isAtivo: newApp.isAtivo
       };
       if(angular.isUndefined(newApp._id)) {
         return AplicacaoResource.save(appSend, function(data) {
@@ -100,7 +100,8 @@ export function AplicacaoService(Util, AplicacaoResource, AplicacaoModuloResourc
         nome: mod.nome,
         descricao: mod.descricao,
         isAtivo: mod.isAtivo,
-        funcoes: mod.funcoes
+        funcoes: mod.funcoes,
+        property: mod.property
       };
       if(angular.isUndefined(modSend._id)) {
         return AplicacaoModuloResource.save(modSend, function(data) {

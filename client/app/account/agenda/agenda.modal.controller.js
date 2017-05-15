@@ -9,7 +9,6 @@ export default class AgendaModalController {
     this.$state = $state;
     this.modalCtl = EventoService.getModalCtl();
     this.event = this.modalCtl.dataSource;
-    this.title = event.title;
     if(this.event.tarefas) {
       this.EventoService.setEventList(this.event.tarefas);
       let dur = 0;
@@ -39,6 +38,12 @@ export default class AgendaModalController {
       this.convenio = domain.convenio;
       this.leito = domain.leito;
       this.quantidade = domain.quantidade;
+
+      this.procedimento.forEach(item => {
+        if(item.name === this.event.title) {
+          this.title = item;
+        }
+      });
     });
     this.hstep = 1;
     this.mstep = 5;
@@ -57,6 +62,12 @@ export default class AgendaModalController {
         return;
       }
       this.event.title = this.title.name;
+      this.showQuant = true;
+      if(this.event.title.toLowerCase() == 'óbito'
+        || this.event.title.toLowerCase() == 'alta') {
+        this.showQuant = false;
+        this.event.quantidade = 1;
+      }
     });
     $scope.$watch('ctl.event.start', () => {
       this.validateDates($scope);
@@ -66,6 +77,7 @@ export default class AgendaModalController {
     });
 
     this.isEdit = true;
+    this.showQuant = true;
   }
   validateDates($scope) {
     if(!$scope.form.hasOwnProperty('dateEnd')) {
@@ -86,7 +98,7 @@ export default class AgendaModalController {
   isDateEndInvalid() {
     return this.event.end <= this.event.start;
   }
-  saveEvent(form) {
+  saveEvent(form, createNew) {
     if(form.$invalid) {
       return;
     }
@@ -94,7 +106,15 @@ export default class AgendaModalController {
     this.EventoService.saveEvent(this.event)
     .then(newEvento => {
       this.toastr.success('Evento salvo com sucesso.', `${newEvento.title}`);
-      this.modalCtl.dismiss();
+
+      if(createNew) {
+        this.toastr.info('', 'Criar novo evento');
+        this.event.title = '';
+        this.event.quantidade = '';
+        this.title = '';
+      } else {
+        this.modalCtl.dismiss();
+      }
       let origin;
       if(this.event.origin && typeof this.event.origin === 'string') {
         origin = this.event.origin;

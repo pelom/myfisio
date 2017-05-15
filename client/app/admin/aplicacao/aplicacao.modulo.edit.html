@@ -8,72 +8,103 @@
 <div class="modal-body">
   <p ng-if="modal.text" ng-bind="modal.text"></p>
   <form class="form" novalidate name="form" ng-submit="ctl.saveModulo(form)">
-    <div class="row">
-      <div class="col-md-12">
-        <dl>
-          <dt><small>Nome do modulo</small></dt>
-          <dd ng-class="{'has-error': form.nomeMod.$invalid && form.nomeMod.$dirty}">
-            <input type="text" class="form-control" placeholder="Digite um nome"
-             name="nomeMod" ng-model="ctl.modulo.nome"
-              ng-required="true" ng-minlength="3" ng-maxlength="40" />
 
-            <p class="help-block" ng-show="form.nomeMod.$error.required && form.nomeMod.$dirty">
-              O sobrenome é necessário</p>
-            <p class="help-block" ng-show="form.nomeMod.$error.pattern">
-              Somente letras são permitidas</p>
-            <p class="help-block" ng-show="form.nomeMod.$error.minlength">
-              São necessários no minimo 3 letras</p>
-            <p class="help-block" ng-show="form.nomeMod.$error.maxlength">
-              São permitidos no máximo 40 letras</p>
-          </dd>
-        </dl>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <textarea class="form-control" rows="2" placeholder="Descrição o módulo"
-          ng-model="ctl.modulo.descricao"></textarea>
-      </div>
-    </div>
-    <br/>
-    <div class="row">
-      <div class="col-md-12">
-        <h5>Funcionalidades disponíveis para o modulo.</h5>
-        <p>
-          <i class="fa fa-info-circle" aria-hidden="true"></i>
-          <small>Você pode criar uma nova função informando um nome.</small>
-        </p>
-        <ui-select multiple remove-selected="false" theme="bootstrap"
-          title="Selecione as funções" tagging="ctl.tagTransform"
-          ng-model="ctl.modulo.select" close-on-select="false">
-          <ui-select-match placeholder="Selecione as funções">
-            <i ng-class="$item.class" aria-hidden="true"></i>
-            <strong>{{$item.name}}</strong>
-          </ui-select-match>
-          <ui-select-choices repeat="item in (ctl.itemArray | filter: $select.search) track by item.name">
-            <i ng-class="item.class" aria-hidden="true"></i>
-            <span ng-if="item.isTag" ng-bind-html="(item.name | highlight: $select.search) +' (novo)'"></span>
-            <span ng-if="!item.isTag" ng-bind-html="item.name + item.isTag| highlight: $select.search"></span>
-          </ui-select-choices>
-        </ui-select>
-        <p>
-          <a href="#" class="btn btn-link" ng-click="ctl.addAllFuncoes();"><small>Adicionar todas</small></a>
-          <a href="#" class="btn btn-link" ng-click="ctl.removeAllFuncoes();"><small>Remover todas</small></a>
-        </p>
-        <p ng-if="ctl.modulo.select.length < 1" class="text-danger">Nenhum função selecionada</p>
-      </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-          <dl>
-            <dt><small>Situação</small></dt>
-            <dd>
-              <select class="form-control" ng-model="ctl.modulo.isAtivo"
-               ng-options="item.value as item.name for item in ctl.itemAtivo"></select>
-             </dd>
-          </dl>
+    <uib-tabset active="active">
+      <uib-tab>
+        <uib-tab-heading>Módulo</uib-tab-heading>
+        <br/>
+        <div class="row">
+          <div class="col-md-12">
+            <dl>
+              <dt><small>Nome do modulo</small></dt>
+              <dd ng-class="{'has-error': form.nomeMod.$invalid && form.nomeMod.$dirty}">
+                <input type="text" class="form-control" placeholder="Digite um nome"
+                 name="nomeMod" ng-model="ctl.modulo.nome"
+                  ng-required="true" ng-minlength="3" ng-maxlength="40" />
+
+                <p class="help-block" ng-show="form.nomeMod.$error.required && form.nomeMod.$dirty">
+                  O sobrenome é necessário</p>
+                <p class="help-block" ng-show="form.nomeMod.$error.pattern">
+                  Somente letras são permitidas</p>
+                <p class="help-block" ng-show="form.nomeMod.$error.minlength">
+                  São necessários no minimo 3 letras</p>
+                <p class="help-block" ng-show="form.nomeMod.$error.maxlength">
+                  São permitidos no máximo 40 letras</p>
+              </dd>
+            </dl>
+          </div>
         </div>
-    </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h5>Funcionalidades disponíveis para o modulo.</h5>
+            <p>
+              <i class="fa fa-info-circle" aria-hidden="true"></i>
+              <small>Você pode criar uma nova função informando um nome.</small>
+            </p>
+            <ui-select multiple remove-selected="false" theme="bootstrap"
+              title="Selecione as funções" tagging="ctl.tagTransform"
+              ng-model="ctl.modulo.select" close-on-select="false">
+              <ui-select-match placeholder="Selecione as funções">
+                <i ng-class="$item.class" aria-hidden="true"></i>
+                <strong>{{$item.name}}</strong>
+              </ui-select-match>
+              <ui-select-choices repeat="item in (ctl.itemArray | filter: $select.search) track by item.name">
+                <i ng-class="item.class" aria-hidden="true"></i>
+                <span ng-if="item.isTag" ng-bind-html="(item.name | highlight: $select.search) +' (novo)'"></span>
+                <span ng-if="!item.isTag" ng-bind-html="item.name + item.isTag| highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+            <p>
+              <a href="#" class="btn btn-link" ng-click="ctl.addAllFuncoes();"><small>Adicionar todas</small></a>
+              <a href="#" class="btn btn-link" ng-click="ctl.removeAllFuncoes();"><small>Remover todas</small></a>
+            </p>
+            <p ng-if="ctl.modulo.select.length < 1" class="text-danger">Nenhum função selecionada</p>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab>
+        <uib-tab-heading>Informações</uib-tab-heading>
+        <br/>
+        <div class="row">
+          <div class="col-md-12">
+            <textarea class="form-control" rows="2" placeholder="Descrição o módulo"
+              ng-model="ctl.modulo.descricao"></textarea>
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+          <div class="col-sm-6">
+            <dl>
+              <dt><small>Situação</small></dt>
+              <dd>
+                <select class="form-control" ng-model="ctl.modulo.isAtivo"
+                 ng-options="item.value as item.name for item in ctl.itemAtivo"></select>
+               </dd>
+            </dl>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab ng-show="ctl.modulo.property">
+        <uib-tab-heading>Configurações</uib-tab-heading>
+        <br/>
+        <div class="row">
+          <div class="col-sm-6" ng-repeat='(key, value) in ctl.modulo.property'>
+            <dl>
+              <dt><small>{{key}}</small></dt>
+              <dd ng-if="key != 'password'">
+                <input type="text" class="form-control" placeholder="Digite um nome"
+                 name="{{key}}" ng-model="ctl.modulo.property[key]"/>
+              </dd>
+              <dd ng-if="key == 'password'">
+                <input type="password" class="form-control" placeholder="Digite um nome"
+                 name="{{key}}" ng-model="ctl.modulo.property[key]"/>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </uib-tab>
+    </uib-tabset>
+
     <div class="row" ng-if="ctl.modulo._id">
       <div class="col-xs-6">
         <dl>

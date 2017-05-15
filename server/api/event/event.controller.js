@@ -19,7 +19,6 @@ export function domain(req, res) {
     status: Event.schema.path('status').enumValues,
     prioridade: Event.schema.path('prioridade').enumValues,
     convenio: ['Interno', 'Externo'],
-    statusPaciente: ['Em Antendimento', 'Óbito', 'Alta'],
     procedimento: [
       { name: 'Avaliação Inicial', shade: 'Procedimento' },
       { name: 'Fisioterapia Motora - FM', shade: 'Procedimento' },
@@ -86,8 +85,12 @@ function createAgendaConfig(user) {
       //right: 'today,month,basicWeek basicDay,agendaWeek,agendaDay,listWeek'
       left: 'title',
       right: 'today prev,next',
-      center: 'agendaDay,listWeek,agendaWeek,month'
+      center: '',
     },
+    //buttonText: {
+    //  listWeek: 'Semana'
+    //},
+    defaultView: 'listDay',
     locale: user.locale,
     lang: user.laguage,
     editable: user.agenda.editable,
@@ -108,7 +111,8 @@ function createAgendaConfig(user) {
 }
 
 const selectIndex = '_id title start end status prioridade allDay descricao isAtivo'
-  + ' proprietario criador modificador createdAt updatedAt tarefas origin local';
+  + ' proprietario criador modificador createdAt updatedAt tarefas origin'
+  + ' local leito quantidade convenio';
 
 const populationOrigin = {
   path: 'origin',
@@ -223,7 +227,10 @@ function requestCreateEvent(req) {
     origin: req.body.origin,
     proprietario: req.user._id,
     criador: req.user._id,
-    modificador: req.user._id
+    modificador: req.user._id,
+    leito: req.body.leito,
+    quantidade: req.body.quantidade,
+    convenio: req.body.convenio,
   };
 }
 
@@ -252,5 +259,8 @@ function requestUpdateEvent(req) {
     isAtivo: req.body.isAtivo,
     proprietario: req.user._id,
     modificador: req.user._id,
+    leito: req.body.leito,
+    quantidade: req.body.quantidade,
+    convenio: req.body.convenio,
   };
 }

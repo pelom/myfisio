@@ -132,7 +132,7 @@ function criarDados() {
     { nome: 'Módulos', funcoes: funcaoList, state: '', icon: 'fa-cube' },
     { nome: 'Tarefas Agendadas', funcoes: funcaoList, state: 'jobs', icon: 'fa-clock-o' },
     { nome: 'Servidor Email', funcoes: funcaoList, state: '', icon: 'fa-envelope',
-      serveEmail: {
+      property: {
         service: 'gmail',
         user: '******@gmail.com',
         password: '******'
