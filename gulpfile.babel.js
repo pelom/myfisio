@@ -600,7 +600,8 @@ gulp.task('copy:server', () => {
   return gulp.src([
     'package.json',
     '.buildpacks',
-    'Aptfile'
+    'Aptfile',
+    'Procfile'
   ], {
     cwdbase: true
   })
