@@ -15,6 +15,25 @@ export function EventoResource($resource) {
       params: {
         id: 'calendar'
       }
+    },
+    pdf: {
+      method: 'GET',
+      headers: {
+        accept: 'application/pdf'
+      },
+      responseType: 'arraybuffer',
+      cache: true,
+      transformResponse(data) {
+        var pdf;
+        if(data) {
+          pdf = new Blob([data], {
+            type: 'application/pdf'
+          });
+        }
+        return {
+          response: pdf
+        };
+      }
     }
   });
 }

@@ -138,6 +138,15 @@ export function EventoService(EventoResource, Util) {
         console.log('Ex:', err);
         return safeCb(callback)(err);
       }).$promise;
+    },
+    pdf(start, end, callback) {
+      return EventoResource.pdf({start, end}, function(data) {
+        evento = data;
+        return safeCb(callback)(evento);
+      }, function(err) {
+        console.log('Ex:', err);
+        return safeCb(callback)(err);
+      }).$promise;
     }
   };
   return eventoService;

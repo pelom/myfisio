@@ -31,20 +31,28 @@
   </div>
   <br></br>
   <br></br>
-  <br></br>
   <h2>{{message}}</h2>
   <hr/>
 
   <table cellpadding="4" cellspacing="3" class="body">
     <tr>
+      <th></th>
       <th>Procedimento</th>
-      <th class="align-right">Total</th>
+      <th class="align-right" >Total</th>
     </tr>
     <% _.forEach(events, function(event, index) { %>
       <tr>
-        <td><%- event._id %></td>
-        <td class="align-right"><%- event.sum %></td>
+        <td><b><%- event._id %></b></td>
+        <td></td>
+        <td class="align-right"><b><%- event.quant %></b></td>
       </tr>
+      <% _.forEach(event.procedimentos, function(proce, index) { %>
+        <tr>
+          <td></td>
+          <td><small><%- proce.title %></small></td>
+          <td class="align-right"><small><%- proce.quant %></small></td>
+        </tr>
+      <% }); %>
     <% }); %>
   </table>
 </body>

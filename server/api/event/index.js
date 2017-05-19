@@ -6,6 +6,7 @@ import * as auth from '../../auth/auth.service';
 let router = new Router();
 
 router.get('/pdf', auth.isAuthenticated(), controller.indexPdf);
+router.get('/pdfleito', auth.isAuthenticated(), controller.indexPdfLeito);
 
 router.get('/domain', auth.isAuthenticated(), controller.domain);
 router.get('/calendar', auth.isAuthenticated(), controller.calendar);

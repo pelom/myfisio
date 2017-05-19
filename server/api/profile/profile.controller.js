@@ -24,7 +24,7 @@ export function index(req, res) {
 }
 
 const selectShow = '_id nome descricao tempoSessao role isAtivo criador '
-  + 'modificador createdAt updatedAt permissoes';
+  + 'modificador createdAt updatedAt permissoes property';
 
 const populationApp = {
   path: 'permissoes.application',

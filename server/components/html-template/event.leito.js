@@ -1,11 +1,11 @@
 import HtmlTemplate from './html.template';
 import config from '../../config/environment';
-export default class EventHtmlTemplate extends HtmlTemplate {
+export default class EventLeitoHtmlTemplate extends HtmlTemplate {
   constructor(user, events) {
     super();
     this.subject = 'Lista de eventos atrasados';
     this.data = {
-      title: 'Relatório Procedimentos',
+      title: 'Relatório Leitos/Procedimentos',
       message: 'Atividades realizadas',
       copymark: 'PJsin 2008-2017',
       events,
@@ -13,6 +13,6 @@ export default class EventHtmlTemplate extends HtmlTemplate {
     };
   }
   getTemplate() {
-    return this.pathResolve('./event.hours.html');
+    return this.pathResolve('./event.leito.html');
   }
 }

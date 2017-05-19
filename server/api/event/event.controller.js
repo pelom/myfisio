@@ -3,12 +3,29 @@ import Event from './event.model';
 import User from '../user/user.model';
 import ApiService from '../api.service';
 import EventPdf from '../../components/genarate-pdf/event.pdf';
-
+import Profile from '../profile/profile.model'
 let api = ApiService();
 let handleError = api.handleError;
 let respondWithResult = api.respondWithResult;
 let handleEntityNotFound = api.handleEntityNotFound;
 let handleValidationError = api.handleValidationError;
+
+let PROFILE_ADMIN_ID;
+function obterProfileDefault(where, select) {
+  Profile.findOne({ nome: where }, select).exec()
+    .then(profile => {
+      if(!profile) {
+        console.log('Profile Admin não encontrado!');
+        return;
+      }
+      PROFILE_ADMIN_ID = profile._id;
+      return profile._id;
+    })
+    .catch(err => {
+      console.log('Ex:', err);
+    });
+}
+obterProfileDefault('Administrador', '_id');
 
 export function domain(req, res) {
   let leitos = [];
@@ -46,15 +63,22 @@ export function domain(req, res) {
     quantidade: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
   });
 }
+const populationProfile = {
+  path: 'profileId',
+  select: '_id nome property'
+};
 
 export function calendar(req, res) {
   User.findById(req.user._id)
-    .select('_id locale timezone laguage agenda')
-    //.populate(query.populate)
+    .select('_id locale timezone laguage agenda profileId')
+    .populate([populationProfile])
     .exec()
     .then(handleEntityNotFound(res))
     .then(user => {
-      if(!user.agenda) {
+      if(!user) {
+        return;
+      }
+      if(!user.hasOwnProperty('agenda')) {
         user.agenda = createAgenda();
       }
       user.agenda.businessHours.forEach(item => {
@@ -72,7 +96,6 @@ function createAgenda() {
     editable: false,
     selectable: false,
     eventLimit: false,
-    startEditable: false,
     slotDuration: '01:00:00',
     businessHours: []
   };
@@ -80,23 +103,12 @@ function createAgenda() {
 
 function createAgendaConfig(user) {
   return {
-    header: {
-      //left: 'month basicWeek basicDay agendaWeek agendaDay',
-      //right: 'today,month,basicWeek basicDay,agendaWeek,agendaDay,listWeek'
-      left: 'title',
-      right: 'today prev,next',
-      center: '',
-    },
-    //buttonText: {
-    //  listWeek: 'Semana'
-    //},
-    defaultView: 'listDay',
+    header: user.profileId.property.header,
     locale: user.locale,
     lang: user.laguage,
     editable: user.agenda.editable,
     selectable: user.agenda.selectable,
-    eventLimit: user.agenda.eventLimit, // allow "more" link when too many events
-    startEditable: user.agenda.startEditable,
+    eventLimit: user.agenda.eventLimit,
     slotDuration: user.agenda.slotDuration,
     //selectConstraint: 'businessHours',
     //eventConstraint: 'businessHours',
@@ -127,16 +139,77 @@ const populationTarefa = {
   }
 };
 
+export function indexPdfLeito(req, res) {
+  let firstDay = new Date(req.query.start);
+  let lastDay = new Date(req.query.end);
+  Event.aggregate([{
+    $match: {
+      start: { $gte: firstDay, $lte: lastDay }
+    }
+  },
+  {
+    $group: {
+      _id: '$leito',
+      procedimentos: { $addToSet: {title: '$title', quant: '$quantidade' } },
+      quant: { $sum: '$quantidade' },
+      count: { $sum: 1 },
+      itens: { $push: '$$ROOT' }
+    }
+  }, {
+    $sort: {
+      _id: 1
+    }
+  }], function(err, result) {
+    if(err) {
+      console.log(err);
+    } else {
+      let user = api.getUserRequest(req);
+      EventPdf().generateEventLeito(firstDay, lastDay, user, result, res);
+    }
+  });
+}
 export function indexPdf(req, res) {
   let firstDay = new Date(req.query.start);
   let lastDay = new Date(req.query.end);
-  let status = req.query.status || 'Concluído'.split(',');
-  console.log(firstDay, lastDay, status);
+  //let status = req.query.status || 'Concluído'.split(',');
+  console.log(firstDay, lastDay);
 
-  Event.find({
+  Event.aggregate([{
+    $match: {
+      start: { $gte: firstDay, $lte: lastDay }
+    }
+  }, {
+    $group: {
+      _id: '$title',
+      sum: { $sum: '$quantidade' },
+      count: { $sum: 1 },
+      itens: { $push: '$$ROOT' }
+    }
+  }, {
+    $sort: {
+      _id: 1
+    }
+  }], function(err, result) {
+    if(err) {
+      console.log(err);
+    } else {
+      let user = api.getUserRequest(req);
+      EventPdf().generateEventProcedimento(firstDay, lastDay, user, result, res);
+      /*User.populate(result, {
+        path: 'users.user',
+        select: '_id nome'
+      }, function(err, results) {
+        if(err) throw err;
+        let user = api.getUserRequest(req);
+        EventPdf().generateEventProcedimento(firstDay, lastDay, user, results, res);
+      });*/
+    }
+  });
+
+  /*Event.find({
     start: { $gte: firstDay, $lte: lastDay },
-    proprietario: req.user._id,
-    status: { $in: status }
+    //proprietario: req.user._id,
+    //status: { $in: status }
   }, selectShow, {
     skip: 0, limit: 200,
     sort: {
@@ -146,10 +219,14 @@ export function indexPdf(req, res) {
     .populate([api.populationProprietario, api.populationCriador, api.populationModificador])
     .exec()
     .then(events => {
+      events.forEach(item => {
+        console.log(item.title, item.quantidade);
+      });
       let user = api.getUserRequest(req);
-      EventPdf().generateEventHour(user, events, res);
+      EventPdf().generateEventProcedimento(firstDay, lastDay, user, events, res);
     })
     .catch(handleError(res));
+    */
 }
 
 export function index(req, res) {
@@ -158,14 +235,17 @@ export function index(req, res) {
   let status = req.query.status || 'Pendente,Em Andamento,Concluído,Cancelado'.split(',');
   console.log('firstDay', firstDay);
   console.log('lastDay', lastDay);
-  return api.find({
+  console.log('User: ', req.user);
+  console.log('PROFILE_ADMIN_ID', PROFILE_ADMIN_ID);
+
+  let query = {
     model: 'Event',
     select: selectIndex,
     populate: [populationTarefa, populationOrigin, api.populationProprietario,
       api.populationCriador, api.populationModificador],
     where: {
       start: { $gte: firstDay, $lte: lastDay },
-      proprietario: req.user._id,
+      //proprietario: req.user._id,
       status: { $in: status }
     },
     options: { skip: 0, limit: 50,
@@ -173,11 +253,16 @@ export function index(req, res) {
         createdAt: -1
       }
     }
-  }, res);
+  };
+
+  if(req.user.profileId != PROFILE_ADMIN_ID) {
+    query.where.proprietario = req.user._id;
+  }
+  return api.find(query, res);
 }
 
 const selectShow = '_id title start end status prioridade allDay descricao isAtivo'
-  + ' proprietario criador modificador createdAt updatedAt tarefas origin local';
+  + ' proprietario criador modificador createdAt updatedAt tarefas origin local quantidade';
 
 export function show(req, res) {
   return Event.find({_id: req.params.id, proprietario: req.user._id}, selectShow, {

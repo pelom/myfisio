@@ -145,12 +145,26 @@ function criarDados() {
     nome: 'Administrador',
     descricao: 'Perfil responsável por fornecer as permissões para os administradores da plataforma',
     isAtivo: true,
-    role: 'admin'
+    role: 'admin',
+    property: {
+      header: {
+        left: 'title',
+        right: 'today prev,next',
+        center: 'agendaDay,listWeek,agendaWeek,month'
+      },
+    }
   });
   profileMap.set('Usuário', {
     nome: 'Usuário',
     descricao: 'Perfil responsável por fornecer as permissões para os usuários da plataforma ',
-    isAtivo: true, role: 'user'
+    isAtivo: true, role: 'user',
+    property: {
+      header: {
+        left: 'title',
+        right: 'today prev,next',
+        center: 'agendaDay,listWeek,agendaWeek,month'
+      },
+    }
   });
 
   let userMap = new Map();

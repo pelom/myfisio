@@ -5,8 +5,11 @@ import moment from 'moment';
 /* eslint no-sync: 0 */
 export default class HomeController {
   /*@ngInject*/
-  constructor($stateParams, $location, EventoService, toastr, usSpinnerService, Modal) {
+  constructor($stateParams, $location, $window, EventoService,
+    toastr, usSpinnerService, Modal, appConfig, Auth) {
+    this.isAdmin = Auth.isAdminSync;
     this.$stateParams = $stateParams;
+    this.$window = $window;
     this.defaultView = $stateParams.defaultView || 'listDay';
     this.defaultDate = $stateParams.defaultDate || new Date();
     this.defaultStatus = $stateParams.defaultStatus || null;
@@ -62,8 +65,11 @@ export default class HomeController {
       },
       eventRender: (event, element, view) => {
         if(view.name == 'listDay') {
-          let sCell = `<b><span class="badge">${event.quantidade}</span> ${event.title}</b><br/><span class="label label-success">${event.leito}</span> - ${event.convenio}`;
-          element.find('td.fc-list-item-title').html(sCell);
+          let sCell = `<b><span class="badge">${event.quantidade}</span> ${event.title}</b><br/>`;
+          let sCell2 = `<span class="label label-success">${event.leito}</span> - ${event.convenio}`;
+          let sCell3 = ` / <a target="_black" href="/usuario/edit/${event.proprietario._id}">${event.proprietario.nome} ${event.proprietario.sobrenome}</a>`;
+          let cell = sCell + sCell2 + (this.isAdmin() ? sCell3 : '');
+          element.find('td.fc-list-item-title').html(cell);
         } else {
           element.attr('title', event.start.format('LLLL'));
           //element.find('.fc-title').after('<div ></div>');
@@ -225,5 +231,27 @@ export default class HomeController {
       start: moment(dateFormat).toDate()
     };
     this.openModalEvent(evento);
+  }
+
+  relat(url) {
+    let startMoment = moment(this.startInterval);
+    let start = startMoment.format('YYYY-MM-DD');
+    let end = startMoment.add(24, 'hours');
+    if(this.endInterval) {
+      end = moment(this.endInterval).format('YYYY-MM-DD');
+    }
+    let urlPath = `${url}start=${start}&end=${end}`
+    /*this.EventoService.pdf(start, end).then(data => {
+      console.log(data);
+      var a = document.createElement('a');
+      document.body.appendChild(a);
+      a.style = 'display: none';
+      //var file = new Blob([result.data], {type: 'application/pdf'});
+      var fileURL = URL.createObjectURL(data);
+      a.href = fileURL;
+      a.download = 'fileName';
+      a.click();
+    });*/
+    this.$window.open(urlPath, '_blank');
   }
 }

@@ -5,25 +5,14 @@
   Entrar na conta</h1>
 
   <div class="row">
-
     <div class="col-md-8">
-
       <div class="panel panel-default">
-        <!--div class="panel-heading">
-          <h3 class="panel-title">
-            Informe o Email e Senha</h3>
-        </div-->
-
         <form class="form" name="form" ng-submit="vm.login(form)" novalidate>
           <br/>
 
           <ul class="list-group no-margin-bottom">
             <li class="list-group-item no-border"
               ng-class="{ 'has-error': form.username.$invalid && form.username.$dirty }">
-              <!--label>Email</label-->
-              <!--input type="email" name="email" class="form-control"
-                ng-model="vm.user.email" required placeholder="email@gmail.com"-->
-
               <input name="username" class="form-control" placeholder="usuario@myfisio.com"
                  ng-pattern='/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i'
                   ng-model="vm.user.username" ng-required="true"/>
@@ -35,30 +24,23 @@
             </li>
 
             <li class="list-group-item no-border"
-                ng-class="{ 'has-error': (form.password.$invalid && form.password.$dirty) || (vm.errors.login)  }">
-              <!--label>Senha</label-->
+                ng-class="{ 'has-error': (form.password.$invalid && form.password.$dirty)}">
               <input type="password" name="password" class="form-control"
                placeholder="Senha" ng-minlength="5" ng-maxlength="20"
                 ng-model="vm.user.password" ng-required="true"/>
 
-              <!--input type="password" name="password" class="form-control" id="password"
-                ng-model="vm.user.password" ng-required="true" placeholder="Senha"-->
-
-                <p class="help-block" ng-show="(form.username.$error.required || form.password.$error.required) && vm.submitted">
+                <p class="help-block"
+                  ng-show="form.password.$error.required && form.password.$dirty">
                   Por favor entre com seu e-mail e senha.
                 </p>
-                <p class="help-block" ng-show="form.username.$error.username && vm.submitted">
-                   Usuário ou Senha inválido.
-                </p>
-                <p class="help-block">{{ vm.errors.login }}</p>
             </li>
             <hr/>
             <div class="list-group-item no-border">
               <button class="btn btn-primary btn-lg" type="submit">
                 Entrar
               </button>
-              <a ui-sref="signup" class="btn-link pull-right">
-              <i class="fa fa-edit fa-fw" aria-hidden="true"></i>  Criar conta</a>
+              <!--a ui-sref="signup" class="btn-link pull-right">
+                <i class="fa fa-edit fa-fw" aria-hidden="true"></i>  Criar conta</a-->
             </div>
             <br/>
           </ul>

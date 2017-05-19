@@ -10,7 +10,6 @@ var AgendaSchema = new Schema({
   editable: { type: Boolean, default: false },
   selectable: { type: Boolean, default: false },
   eventLimit: { type: Boolean, default: false },
-  startEditable: { type: Boolean, default: false },
   slotDuration: { type: String, enum: [
     '00:15:00', '00:30:00', '01:00:00', '01:30:00'], default: '00:30:00'},
   selectConstraint: String,

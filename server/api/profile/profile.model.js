@@ -21,7 +21,8 @@ var ProfileSchema = new Schema({
   role: { type: String, required: true, default: 'user' },
   isAtivo: { type: Boolean, required: true, default: true },
   criador: { type: Schema.Types.ObjectId, ref: 'User' },
-  modificador: { type: Schema.Types.ObjectId, ref: 'User'}
+  modificador: { type: Schema.Types.ObjectId, ref: 'User'},
+  property: Schema.Types.Mixed,
 }, {
   timestamps: true
 });
